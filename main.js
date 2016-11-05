@@ -5,7 +5,18 @@ var y = 0;
 var xspeed = 0;
 var yspeed = 0;
 var gravity = 1;
-var ground = canvas.height - 100;
+var height = 100;
+var ground = canvas.height - height;
+
+var playerRight = new Image();
+playerRight.src = "player.png";
+var imageRatio = 1;
+playerRight.onload = function() {
+  imageRatio = playerRight.width / playerRight.height;
+}
+var playerLeft = new Image();
+playerLeft.src = "player2.png";
+var playerImage = playerRight;
 
 function draw() {
   x = x + xspeed;
@@ -20,8 +31,7 @@ function draw() {
   game.fillStyle = "lightblue";
   game.fillRect(0, 0, canvas.width, canvas.height);
 
-  game.fillStyle = "purple";
-  game.fillRect(x, y, 100, 100);
+  game.drawImage(playerImage, x, y, height * imageRatio, height);
 }
 
 setInterval(draw, 20);
@@ -30,10 +40,12 @@ function startMove(event) {
   // pressed left
   if (event.keyCode == 37) {
     xspeed = -5;
+    playerImage = playerLeft;
   }
   // pressed right
   if (event.keyCode == 39) {
     xspeed = 5;
+    playerImage = playerRight;
   }
   // pressed up
   if (event.keyCode == 38) {
